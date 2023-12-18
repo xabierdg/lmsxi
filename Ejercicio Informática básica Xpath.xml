@@ -1,0 +1,9 @@
+﻿Ejercicio 1) /equipos/máquina
+Ejercicio 2) /equipos/máquina/hardware
+Ejercicio 3) /equipos/máquina/config
+Ejercicio 4) /equipos/máquina/hardware/fabricante
+Ejercicio 5) /equipos/máquina/hardware/disco
+Ejercicio 6) /equipos/máquina/config/IP
+Ejercicio 7) /equipos/máquina/@nome
+Ejercicio 8) /equipos/máquina[hardware/gravadora[@tipo='DVD']]/@nome
+Ejercicio 9) /equipos/máquina/config[role]/OS

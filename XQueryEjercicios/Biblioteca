@@ -1,0 +1,71 @@
+Escribe las consultas XQuery que permitan obtener la siguiente información:
+1. Título y editorial de todos los libros.
+* Los datos de cada libro deben estar dentro de un elemento <libro>.
+* El título y la editorial de cada libro deben estar separados por un guión medio (-).
+
+for $a in doc("bib.xml")//libro
+order by $a/@ano
+return
+<libro>
+{$a/@ano}
+{$a/titulo}
+</libro>
+
+2. El título de todos los libros de menos de 400 páginas.
+* Se debe obtener únicamente los datos, sin etiquetas.
+
+for $a in //libro
+where $a/paginas < 400
+return ($a/titulo/text())
+
+3. La cantidad de libros de más de 400 páginas.
+
+let $a := //libro[number(paginas) > 400]
+return count($a)
+
+4. Una lista HTML con el título de los libros de la editorial O'Reilly Media ordenados por título.
+
+<html><body><ul><li>XML Pocket Reference</li><li>XML Schema: The W3C's Object-Oriented Descriptions for XML</li><li>XQuery: Search Across a Variety of XML Data</li><li>XSLT Cookbook</li></ul></body></html>
+
+5. Título y editorial de los libros de 2018 y 2019.
+* Los datos de cada libro deben estar dentro de un elemento <libro>.
+* El título y la editorial deben ir dentro de los elementos <titulo> y <editorial> respectivamente.
+
+for $a in //libro
+where $a/@publicacion = "2018" or $a/@publicacion = "2019" 
+return
+<libro>
+<titulo>{$a/titulo/text()}</titulo>
+<editorial>{$a/editorial/text()}</editorial>
+</libro>
+
+6. Título y editorial de los libros con más de un autor.
+* Los datos de cada libro deben estar dentro de un elemento <libro>.
+* El título y la editorial deben ir dentro de los elementos <titulo> y <editorial> respectivamente.
+ 
+for $a in //libro
+where count($a/autor) > 1
+return
+<libro>
+<titulo>{$a/titulo/text()}</titulo>
+<editorial>{$a/editorial/text()}</editorial>
+</libro>
+
+7. Título y año de publicación de los libros que tienen versión electrónica.
+* Los datos de cada libro deben estar dentro de un elemento <libro>.
+* El título y el año de publicación deben ir dentro de los elementos <titulo> y <fecha-publicacion> respectivamente.
+
+for $a in //libro
+where $a/edicionElectronica/text() = "true"
+return
+<libro>
+<titulo>{$a/titulo/text()}</titulo>
+<fecha-publicacion>{data($a/@publicacion)}</fecha-publicacion>
+</libro>
+
+8. Título de los libros que no tienen versión electrónica.
+* Se debe obtener únicamente los datos, sin etiquetas.
+
+for $a in //libro
+where not($a/edicionElectronica)
+return $a/titulo/text()
